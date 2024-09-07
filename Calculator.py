@@ -29,7 +29,32 @@ class Calculator:
         pass
 
     def get_result(self) -> str:
-        pass
+        left_operand = float(self.left_operand)
+        right_operand = float(self.right_operand) if self.right_operand else left_operand
+        if self.operator == "+":
+            left_operand += right_operand
+        elif self.operator == "-":
+            left_operand -= right_operand
+        elif self.operator == "*":
+            left_operand *= right_operand
+        elif self.operator == "/":
+            if right_operand != 0:
+                left_operand /= right_operand
+            else:
+                self.clear()
+                return self.CANNOT_DIVIDE_BY_ZERO_ERROR_MASSAGE
+            
+        if int(left_operand) == float(left_operand):
+            self.left_operand = str(int(left_operand))
+            self.left_operand_is_decimal = False
+        else:
+            self.left_operand = str(left_operand)
+            self.left_operand_is_decimal = True
+        
+        self.operator = None
+        self.right_operand = None
+        self.right_operand_is_decimal = False
+        return self.left_operand
     
     def add_number(self, number: str) -> str:
         pass
