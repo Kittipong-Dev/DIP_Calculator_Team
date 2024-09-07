@@ -6,6 +6,12 @@ class Calculator:
         self.operator: str | None = None
         self.left_operand_is_decimal: bool = False
         self.right_operand_is_decimal: bool = False
+        self.CANNOT_DIVIDE_BY_ZERO_ERROR_MESSAGE: str = "Cannot divide by zero"
+
+    def handle_divide_by_zero(self, value: str) -> str:
+        if value == self.CANNOT_DIVIDE_BY_ZERO_ERROR_MESSAGE:
+            return "0"
+        return value
 
     def plus(self) -> str:
         pass
@@ -19,8 +25,27 @@ class Calculator:
     def multiply(self) -> str:
         pass
 
-    def percent(self) -> str:
-        pass
+    def percent(self):
+        if self.operator:
+            left_operand = float(self.left_operand)
+            if self.operator in ["-", "+"]:
+                if self.right_operand:
+                    right_operand = float(self.right_operand)
+                else:
+                    right_operand = left_operand
+                self.right_operand = right_operand * left_operand / 100
+            elif self.operator in ["/", "*"]:
+                self.right_operand = left_operand / 100
+            if int(self.right_operand) == float(self.right_operand):
+                self.right_operand = str(int(self.right_operand))
+                self.right_operand_is_decimal = False
+            else:
+                self.right_operand = str(self.right_operand)
+                self.right_operand_is_decimal = True
+            return self.right_operand
+
+        self.left_operand = "0"
+        return self.left_operand
 
     def negate(self) -> str:
         pass
@@ -32,7 +57,21 @@ class Calculator:
         pass
     
     def add_number(self, number: str) -> str:
-        pass
+        if self.operator:
+            if self.right_operand:
+                right_operand = self.right_operand[1:] if self.right_operand[0] == "0" else self.right_operand
+                self.right_operand = right_operand + number
+            else:
+                self.right_operand = number
+            return self.right_operand
+        left_operand = self.left_operand[1:] if self.left_operand[0] == "0" else self.left_operand
+        self.left_operand = left_operand + number
+        return self.left_operand
 
     def clear(self) -> str:
-        pass
+        self.left_operand = "0"
+        self.right_operand = None
+        self.operator = None
+        self.left_operand_is_decimal = False
+        self.right_operand_is_decimal = False
+        return self.left_operand
