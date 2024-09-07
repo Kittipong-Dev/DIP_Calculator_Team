@@ -1,4 +1,3 @@
-# don't forget cannot divide by zero
 class Calculator:
     def __init__(self) -> None:
         self.left_operand: str = "0"
