@@ -46,11 +46,26 @@ class Calculator:
         self.left_operand = "0"
         return self.left_operand
 
-    def negate(self) -> str:
-        pass
-
     def decimal(self) -> str:
-        pass
+        if self.operator:
+            if not self.right_operand_is_decimal:
+                self.right_operand = (self.right_operand + ".") if self.right_operand else (self.left_operand + ".")
+                self.right_operand_is_decimal = True
+            return self.right_operand
+        
+        if not self.left_operand_is_decimal:
+            self.left_operand = self.left_operand + "."
+            self.left_operand_is_decimal = True
+        return self.left_operand
+
+    def negate(self) -> str:
+        if self.operator:
+            right_operand = self.right_operand if self.right_operand else self.left_operand
+            self.right_operand = right_operand[1:] if self.right_operand[0] == "-" else ("-" + right_operand)
+            return self.right_operand
+        
+        self.left_operand = self.left_operand[1:] if self.left_operand[0] == "-" else ("-" + self.left_operand)
+        return self.left_operand
 
     def get_result(self) -> str:
         left_operand = float(self.left_operand)
