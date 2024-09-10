@@ -29,10 +29,20 @@ class Calculator:
         return self.left_operand
     
     def divide(self) -> str:
-        pass
+        if self.operator:
+            res = self.get_result()
+            self.left_operand = self.handle_divide_by_zero(res)
+            return res
+        self.operator = "/"
+        return self.left_operand
     
     def multiply(self) -> str:
-        pass
+        if self.operator:
+            res = self.get_result()
+            self.left_operand = self.handle_divide_by_zero(res)
+            return res
+        self.operator = "*"
+        return self.left_operand
 
     def percent(self):
         if self.operator:
