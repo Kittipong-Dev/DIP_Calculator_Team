@@ -14,7 +14,7 @@ class DisplayCalculator:
         self.label.grid(row=0, column=0, columnspan=4, pady=(100, 20))
 
         # first row
-        self.clear_btn = tk.Button(self.root, text="AC", width=10, height=5, command=lambda: self.update_display(self.cal.add_number("0")))
+        self.clear_btn = tk.Button(self.root, text="AC", width=10, height=5, command=lambda: self.update_display(self.cal.clear()))
         self.clear_btn.grid(row=1, column=0,)
 
         self.negativenum_btn = tk.Button(self.root, text="+/-", width=10, height=5, command=lambda: self.update_display(self.cal.negate()))
